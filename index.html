@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kat Connelly</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&display=swap" rel="stylesheet">
+    
+    <!-- Link to p5.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+
+    <!-- Link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script>
+    const reviews = [
+        { text: '"Kathleen Connelly is the real deal! I have had multiple readings from Kat over the past number of years and she always intuitively answers the questions I have without me even having to ask them. Her connection with Spirit is unwaveringly strong and her caring intention in helping the person in front of her brings such a healing energy. She is able to describe the messages Spirit is bringing to her in such a clear and accurate manner, it is a confirmation that her connection with Spirit is based in Truth. I would wholeheartedly recommend to anyone who is seeking spiritual enlightenment, spiritual healing and/or spiritual elevation to seek out Kathleen Connelly!"', author: '- Nancy Ramirez, Thousand Oaks, California' },
+        { text: '"Kat is exceptionally talented and insightful!! I have had readings from several mediums over the years, and Kat’s peaceful, confident style of communication immediately had me connected with her and trusting of her abilities. She is the real deal! I came away from my reading with clarity and future direction for critical areas of my life. My heart is full of love from connecting with my family members on the other side and experiencing the messages they shared with me. Kat brings the unseen support we have around us into the light. She is quite amazing!"', author: '- Dee Navolio' },
+        { text: '"I have been to multiple psychics and mediums in the past, but Kat is special. I felt like she could see into my soul. She speaks with a quiet calm and has such a beautiful peace around her. I trust her and look forward to working with her again. Going forward, she is my go-to!"', author: '- Amy M.' },
+        { text: '"I had an intuitive reading by Kat and it was spot on! I needed clarity on my own spirituality and changes that I was making in my personal life. I felt so comfortable with her. She really gave me some amazing guidance and you can tell she really cares and wanted the best for me and my future. I look forward to doing another session with her in the future."', author: '- Mary L.'},
+    ];
+
+    let currentReviewIndex = 0;
+
+    function updateReview() {
+        const reviewBox = document.querySelector('.review-box');
+        const reviewText = document.querySelector('.review-text');
+        const reviewAuthor = document.querySelector('.review-author');
+        
+        // Apply the review text and author
+        reviewText.textContent = reviews[currentReviewIndex].text;
+        reviewAuthor.textContent = reviews[currentReviewIndex].author;
+
+        // Trigger the bobbing effect by adding the class, then removing it after the animation
+        reviewBox.classList.add('bobbing');
+        setTimeout(() => {
+            reviewBox.classList.remove('bobbing');
+        }, 500); // The animation duration (same as in the CSS)
+    }
+
+    function previousReview() {
+        currentReviewIndex = (currentReviewIndex === 0) ? reviews.length - 1 : currentReviewIndex - 1;
+        updateReview();
+    }
+
+    function nextReview() {
+        currentReviewIndex = (currentReviewIndex === reviews.length - 1) ? 0 : currentReviewIndex + 1;
+        updateReview();
+    }
+
+    // Initial review load
+    updateReview();
+</script>
+
+
+
+    <style>
+        /* Remove default margins and paddings */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Playfair Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Fix the p5.js canvas in the background */
+        #p5-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1; /* Keep it behind other elements */
+            width: 100vw;
+            height: 100vh;
+        }
+
+        header, section, footer {
+            background-color: transparent; /* Make all sections transparent */
+        }
+
+        header {
+            padding: 40px;
+            text-align: center;
+            font-family: 'Fondamento', sans-serif;
+            color: white;
+
+        }
+       #about p {
+           color: white;
+       }
+    
+      #about h2 {
+           color: #8b4513;
+          font-family: 'Fondamento', sans-serif;
+       }
+    
+    #services h2 {
+           color: #8b4513;
+          font-family: 'Fondamento', sans-serif;
+       }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            letter-spacing: 2px;
+        }
+
+        section {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Styling the image in the "About Me" section */
+        #about img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    opacity: 0; /* Start fully transparent */
+    transform: translateY(50px); /* Start slightly below its final position */
+    animation: riseUp 2s ease-out forwards; /* Apply the animation */
+}
+
+/* Define the keyframes for the rise-up and fade-in effect */
+@keyframes riseUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px); /* Start 50px below */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* End at the original position */
+    }
+}
+
+.service-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit the text color of the service item */
+    display: block; /* Make the entire service area clickable */
+    width: 30%; /* Ensure the links take up the same width as before */
+    margin: 10px;
+    box-sizing: border-box; /* Ensure padding and borders don't add to the width */
+}
+
+.service-link:hover .service {
+    transform: translateY(-5px); /* Slightly lift the service box on hover */
+    transition: transform 0.3s ease;
+}
+
+
+        .services {
+            display: flex;
+    justify-content: center; /* Center the service items */
+    align-items: center;
+    margin: 20px 0;
+     /* Allow wrapping for smaller screens */
+        }
+
+        .service {
+            background-color: rgba(255, 255, 255, 0.8); /* Slight transparency */
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box; /* Ensure padding doesn't add to width */
+    transition: transform 0.3s ease;
+        }
+
+        .service h3 {
+            color: #8b4513; /* Muted brown for a more earthy feel */
+        }
+
+        .service p {
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: white;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Mobile responsiveness using media queries */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .services {
+                flex-direction: column;
+                align-items: center; /* Center services vertically */
+            }
+              #services h2 {
+            color: #8b4513; /* Muted brown for a more earthy feel */
+        }
+
+            .service {
+                width: 80%; /* Take more space on smaller screens */
+            }
+            .service-link {
+        width: 80%; /* Wider boxes on smaller screens */
+    }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 20px;
+            }
+
+            .service {
+                width: 100%; /* Full-width services on small screens */
+            }
+            .service-link {
+        width: 100%; /* Full width on very small screens */
+    }
+        }
+    
+    #client-love-notes {
+    text-align: center;
+    margin: 50px 0;
+}
+    #client-love-notes h2{
+    color: #8b4513;
+    font-family: 'Fondamento', sans-serif;
+    margin: 20px 0;    
+}
+
+.review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Bob animation keyframes */
+@keyframes bob {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px); /* Move up slightly */
+    }
+    100% {
+        transform: translateY(0); /* Return to original position */
+    }
+}
+
+.review-box {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/* Apply bob animation when the class is added */
+.bobbing {
+    animation: bob 0.5s ease;
+}
+
+
+.review-text {
+    font-style: italic;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.review-author {
+    text-align: right;
+    font-weight: bold;
+    color: #556B2F; /* Complementary desert green color */
+}
+
+.review-arrow {
+    cursor: pointer;
+    font-size: 24px;
+    padding: 10px;
+    color: #556B2F;
+}
+
+.left-arrow {
+    position: absolute;
+    left: 0;
+}
+
+.right-arrow {
+    position: absolute;
+    right: 0;
+}
+
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Kat Connelly </h1>
+    <p>Spiritual Intuitive</p>
+</header>
+
+<section id="about">
+    <h2>Hi! I'm Kat.</h2>
+    <img src="https://i.postimg.cc/GtwFGmZT/AK6.png" alt="Psychic Medium Image">
+    <p> Step into a world of clarity and guidance with an intuitive reading from me.</p>
+</section>
+
+<section id="services">
+    <h2>Offerings</h2>
+    <div class="services">
+        <a href="#about" class="service-link">
+        <div class="service">
+            <h3>Spiritual Teacher</h3>
+            <p>Guidance on spiritual growth, helping you align with your true self and purpose.</p>
+        </div>
+    </a>
+
+    <a href="#about" class="service-link">
+        <div class="service">
+            <h3>Intuitive & Mediumship Readings</h3>
+            <p>Readings that offer clarity and insight into your life's path.</p>
+        </div>
+    </a>
+
+    <a href="#about" class="service-link">
+        <div class="service">
+            <h3>Spiritual Intuition Retreats</h3>
+            <p>an immersive experience designed to help individuals deepen their connection with their inner wisdom.</p>
+        </div>
+    </a>
+    </div>
+</section>
+    
+    <section id="client-love-notes">
+    <h2>Client Love Notes</h2>
+    
+    <div class="review-container">
+        <div class="review-arrow left-arrow" onclick="previousReview()">&#10094;</div>
+        
+        <div class="review-box">
+            <p class="review-text">"Kathleen is a gifted medium with unique insight. Her loving and kind demeanor
+immediately puts you at ease. I could feel the spiritual connection she has. Her
+reading was positive and uplifting. I left the session with a renewed outlook on
+my life."</p>
+            <p class="review-author">- C. Carpenter</p>
+        </div>
+        
+        <div class="review-arrow right-arrow" onclick="nextReview()">&#10095;</div>
+    </div>
+</section>
+
+
+<section id="contact">
+    <h2>Contact Me</h2>
+    <p>Email: psychic@mediumservices.com | Phone: 555-555-5555</p>
+</section>
+
+<footer>
+    <p>&copy; 2024 Psychic Medium Services | All Rights Reserved</p>
+</footer>
+
+<!-- p5.js sketch embedded in the script tag -->
+<script>
+    let ripples = [];
+
+    function setup() {
+        let canvas = createCanvas(windowWidth, windowHeight);
+        canvas.id('p5-canvas'); // Assign an ID to the canvas for styling and control
+
+        // Create a ripple at random positions every second
+        setInterval(() => {
+            let randomX = random(width);
+            let randomY = random(height);
+            ripples.push(new Ripple(randomX, randomY));
+        }, 3000); // 1000 milliseconds = 1 second
+    }
+
+    function draw() {
+        // Draw a gradient background (tan to green)
+        for (let y = 0; y < height; y++) {
+            let inter = map(y, 0, height, 0, 1);
+            let gradientColor = lerpColor(color(210, 180, 140), color(143, 188, 143), inter); // tan to green
+            stroke(gradientColor);
+            line(0, y, width, y);
+        }
+
+        // Update and display ripples
+        for (let i = ripples.length - 1; i >= 0; i--) {
+            ripples[i].update();
+            ripples[i].display();
+            if (ripples[i].isFinished()) {
+                ripples.splice(i, 1); // Remove finished ripples
+            }
+        }
+    }
+
+    // Add ripples when mouse moves (desktop) or touch moves (mobile)
+    //function mouseMoved() {
+       // ripples.push(new Ripple(mouseX, mouseY));
+   // }
+
+    function touchMoved() {
+        ripples.push(new Ripple(touchX, touchY));
+        return false; // Prevents default scrolling behavior on mobile
+    }
+
+    class Ripple {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.radius = 0;
+            this.alpha = 255;
+        }
+
+        update() {
+            this.radius += 0.8;  // Slower expansion
+            this.alpha -= 1;  // Slower fade out
+        }
+
+        display() {
+            noFill();
+            stroke(255, this.alpha); // White ripple
+            strokeWeight(2);
+            ellipse(this.x, this.y, this.radius * 2);
+        }
+
+        isFinished() {
+            return this.alpha <= 0;
+        }
+    }
+
+    // Make canvas resize dynamically with the window
+    function windowResized() {
+        resizeCanvas(windowWidth, windowHeight);
+    }
+</script>
+
+</body>
+</html>
